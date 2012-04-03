@@ -4,4 +4,7 @@ HGREV
 .coverage
 .tox/
 Django-*.egg
+.project
+.pydevproject
 *.pyc
+.svn
