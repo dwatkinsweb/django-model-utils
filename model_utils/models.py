@@ -18,7 +18,6 @@ try:
 except ImportError:
     now = datetime.now
 
-
 class InheritanceCastModel(models.Model):
     """
     An abstract base class that provides a ``real_type`` FK to ContentType.
@@ -55,7 +54,6 @@ class InheritanceCastModel(models.Model):
     class Meta:
         abstract = True
 
-
 class TimeStampedModel(models.Model):
     """
     An abstract base class model that provides self-updating
@@ -67,7 +65,6 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
-
 
 class TimeFramedModel(models.Model):
     """
@@ -95,6 +92,18 @@ class StatusModel(models.Model):
 
     class Meta:
         abstract = True
+
+class RelationalFieldAccessMixin(object):
+    def get_field(self, field_name):
+        field_list = field_name.split('.')
+        obj = self
+        for field in field_list:
+            obj = getattr(obj, field)
+        if hasattr(obj, '__call__'):
+            return obj()
+        else:
+            return obj
+    
 
 def add_status_query_managers(sender, **kwargs):
     """
