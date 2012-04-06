@@ -95,7 +95,7 @@ class StatusModel(models.Model):
 
 class RelationalFieldAccessMixin(object):
     def get_field(self, field_name):
-        field_list = field_name.split('.')
+        field_list = field_name.split('__')
         obj = self
         for field in field_list:
             obj = getattr(obj, field)
