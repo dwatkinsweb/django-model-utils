@@ -49,7 +49,7 @@ class InheritanceManager(models.Manager):
     use_for_related_fields = True
 
     def get_query_set(self):
-        return InheritanceQuerySet(self.model)
+        return InheritanceQuerySet(self.model, self.query)
 
     def select_subclasses(self, *subclasses):
         return self.get_query_set().select_subclasses(*subclasses)
