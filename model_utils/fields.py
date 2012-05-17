@@ -5,6 +5,7 @@ from django.conf import settings
 
 from model_utils import Choices
 
+from uuid import uuid4
 
 try:
     from django.utils.timezone import now as now
@@ -207,6 +208,17 @@ class SplitField(models.TextField):
         except AttributeError:
             return value
 
+class UUIDField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        if 'max_length' not in kwargs:
+            kwargs['max_length'] = 32
+        super(UUIDField, self).__init__(*args, **kwargs)
+        
+    def get_default(self):
+        if not self.has_default():
+            return uuid4().hex
+        else:
+            return super(UUIDField, self).get_default()
 
 # allow South to handle these fields smoothly
 try:
